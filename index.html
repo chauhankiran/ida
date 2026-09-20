@@ -5,13 +5,37 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta
             http-equiv="Content-Security-Policy"
-            content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline';"
+            content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' http: https:;"
         />
         <title>Ida - API Client for Experimentalist!</title>
+
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <p id="name"></p>
-        <p id="version"></p>
+        <div id="location-container">
+            <select id="method">
+                <option value="GET">GET</option>
+                <option value="POST">POST</option>
+                <option value="PUT">PUT</option>
+                <option value="PATCH">PATCH</option>
+                <option value="DELETE">DELETE</option>
+            </select>
+
+            <input type="text" id="url" placeholder="https://example.com/v1/api/ping">
+
+            <button type="button" id="send">Send</button>
+        </div>
+        <div id="main-container">
+            <div id="request-container">#request-container</div>
+            <div id="resizer"></div>
+            <div id="response-container">
+                <div id="response-placeholder">
+                    Your response will be shown here
+                </div>
+
+                <pre id="response-content"></pre>
+            </div>
+        </div>
 
         <script src="./renderer.js"></script>
     </body>
