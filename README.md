@@ -1,2 +1,3 @@
-# ida
-API Client for Experimentalist!
+# Ida
+
+> API Client for Experimentalist!
