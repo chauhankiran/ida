@@ -34,11 +34,33 @@ document.addEventListener("mouseup", () => {
 });
 
 resizer.addEventListener("dblclick", () => {
-    requestContainer.style.width = '50%';
+    requestContainer.style.width = "50%";
 });
 
 //
-// Request.
+// Request placeholder and content visiblity logic.
+// ================================================================================
+//
+
+const requestPlaceholder = document.getElementById("request-placeholder");
+const requestContent = document.getElementById("request-content");
+
+requestPlaceholder.addEventListener("click", () => {
+    requestPlaceholder.style.display = "none";
+    requestContent.style.display = "block";
+
+    requestContent.focus();
+});
+
+requestContent.addEventListener("blur", () => {
+    if (requestContent.textContent.trim() === "") {
+        requestContent.style.display = "none";
+        requestPlaceholder.style.display = "flex";
+    }
+});
+
+//
+// Request execution engine.
 // ================================================================================
 //
 const method = document.getElementById("method");
@@ -51,14 +73,24 @@ send.addEventListener("click", async () => {
     const request = {
         method: method.value,
         url: url.value,
-    }
+    };
 
     responsePlaceholder.style.display = "none";
 
     try {
-        const res = await fetch(request.url, {
-            method: request.method
-        });
+        const options = {
+            method: request.method,
+        };
+
+        if (options.method === "POST") {
+            options.headers = {
+                "Content-Type": "application/json",
+            };
+
+            options.body = requestContent.textContent;
+        }
+
+        const res = await fetch(request.url, options);
 
         if (!res.ok) {
             responseContent.textContent = res.status;

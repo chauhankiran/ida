@@ -9,7 +9,7 @@
         />
         <title>Ida - API Client for Experimentalist!</title>
 
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="style.css" />
     </head>
     <body>
         <div id="location-container">
@@ -21,17 +21,19 @@
                 <option value="DELETE">DELETE</option>
             </select>
 
-            <input type="text" id="url" placeholder="https://example.com/v1/api/ping">
+            <input type="text" id="url" placeholder="https://example.com/v1/api/ping" />
 
             <button type="button" id="send">Send</button>
         </div>
         <div id="main-container">
-            <div id="request-container">#request-container</div>
+            <div id="request-container">
+                <div id="request-placeholder">Add your request body here</div>
+
+                <div id="request-content" contenteditable="true"></div>
+            </div>
             <div id="resizer"></div>
             <div id="response-container">
-                <div id="response-placeholder">
-                    Your response will be shown here
-                </div>
+                <div id="response-placeholder">Your response will be shown here</div>
 
                 <pre id="response-content"></pre>
             </div>

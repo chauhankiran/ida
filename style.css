@@ -45,6 +45,24 @@ body {
 #request-container {
     border-right: 1px solid #ddd;
     padding: 8px;
+    overflow: auto;
+}
+
+#request-placeholder {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: gray;
+    cursor: text;
+}
+
+#request-content {
+    font-family: monospace;
+    display: none;
+    min-height: 100%;
+    white-space: pre-wrap;
+    outline: none;
 }
 
 #response-container {
