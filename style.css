@@ -19,7 +19,7 @@ body {
 }
 
 /**
- * Containers.
+ * Location bar.
  * ================================================================================
  */
 #location-container {
@@ -31,24 +31,52 @@ body {
     padding: 8px;
 }
 
+#method,
+#url,
+#send {
+    border: 1px solid #ddd;
+    height: 100%;
+}
+
+#url {
+    margin-left: 8px;
+    margin-right: 8px;
+    width: 100%;
+}
+
+#send {
+    cursor: pointer;
+}
+
 #main-container {
     display: flex;
     flex-direction: row;
     height: calc(100% - 48px);
 }
 
-#request-container,
-#response-container {
-    width: 50%;
-}
-
+/**
+ * Request area.
+ * ================================================================================
+ */
 #request-container {
     border-right: 1px solid #ddd;
-    padding: 8px;
+    display: flex;
+    flex-direction: column;
     overflow: auto;
+    width: 50%;
+}
+#request-headers,
+#request-body {
+    padding: 8px;
+    height: 50%;
 }
 
-#request-placeholder {
+#request-body {
+    border-top: 1px solid #ddd;
+}
+
+#request-headers-placeholder,
+#request-body-placeholder {
     height: 100%;
     display: flex;
     align-items: center;
@@ -57,12 +85,24 @@ body {
     cursor: text;
 }
 
-#request-content {
+#request-headers-content,
+#request-body-content {
     font-family: monospace;
     display: none;
-    min-height: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
     white-space: pre-wrap;
     outline: none;
+}
+
+/**
+ * Response area.
+ * ================================================================================
+ */
+
+#response-container {
+    width: 50%;
 }
 
 #response-container {
@@ -89,17 +129,4 @@ body {
     width: 6px;
     flex-shrink: 0;
     cursor: col-resize;
-}
-
-#method,
-#url,
-#send {
-    border: 1px solid #ddd;
-    height: 100%;
-}
-
-#url {
-    margin-left: 8px;
-    margin-right: 8px;
-    width: 100%;
 }

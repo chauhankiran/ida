@@ -38,24 +38,40 @@ resizer.addEventListener("dblclick", () => {
 });
 
 //
-// Request placeholder and content visiblity logic.
+// Request placeholder visiblity logic.
 // ================================================================================
 //
+const requestHeadersPlaceholder = document.getElementById("request-headers-placeholder");
+const requestHeadersContent = document.getElementById("request-headers-content");
 
-const requestPlaceholder = document.getElementById("request-placeholder");
-const requestContent = document.getElementById("request-content");
+requestHeadersPlaceholder.addEventListener("click", () => {
+    requestHeadersPlaceholder.style.display = "none";
+    requestHeadersContent.style.display = "block";
 
-requestPlaceholder.addEventListener("click", () => {
-    requestPlaceholder.style.display = "none";
-    requestContent.style.display = "block";
-
-    requestContent.focus();
+    requestHeadersContent.focus();
 });
 
-requestContent.addEventListener("blur", () => {
-    if (requestContent.textContent.trim() === "") {
-        requestContent.style.display = "none";
-        requestPlaceholder.style.display = "flex";
+requestHeadersContent.addEventListener("blur", () => {
+    if (requestHeadersContent.textContent.trim() === "") {
+        requestHeadersContent.style.display = "none";
+        requestHeadersPlaceholder.style.display = "flex";
+    }
+});
+
+const requestBodyPlaceholder = document.getElementById("request-body-placeholder");
+const requestBodyContent = document.getElementById("request-body-content");
+
+requestBodyPlaceholder.addEventListener("click", () => {
+    requestBodyPlaceholder.style.display = "none";
+    requestBodyContent.style.display = "block";
+
+    requestBodyContent.focus();
+});
+
+requestBodyContent.addEventListener("blur", () => {
+    if (requestBodyContent.textContent.trim() === "") {
+        requestBodyContent.style.display = "none";
+        requestBodyPlaceholder.style.display = "flex";
     }
 });
 
@@ -82,12 +98,14 @@ send.addEventListener("click", async () => {
             method: request.method,
         };
 
-        if (options.method === "POST") {
-            options.headers = {
-                "Content-Type": "application/json",
-            };
+        // Add request headers.
+        if (requestHeadersContent.textContent.trim() !== "") {
+            options.headers = JSON.parse(requestHeadersContent.textContent);
+        }
 
-            options.body = requestContent.textContent;
+        // Add request body.
+        if (requestBodyContent.textContent.trim() !== "") {
+            options.body = requestBodyContent.textContent;
         }
 
         const res = await fetch(request.url, options);
