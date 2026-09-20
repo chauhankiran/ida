@@ -66,9 +66,14 @@ body {
     width: 50%;
 }
 #request-headers,
+#request-query-strings,
 #request-body {
     padding: 8px;
-    height: 50%;
+    height: 33.33%;
+}
+
+#request-headers {
+    border-bottom: 1px solid #ddd;
 }
 
 #request-body {
@@ -76,6 +81,7 @@ body {
 }
 
 #request-headers-placeholder,
+#request-query-strings-placeholder,
 #request-body-placeholder {
     height: 100%;
     display: flex;
@@ -86,6 +92,7 @@ body {
 }
 
 #request-headers-content,
+#request-query-strings-content,
 #request-body-content {
     font-family: monospace;
     display: none;

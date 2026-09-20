@@ -41,6 +41,8 @@ resizer.addEventListener("dblclick", () => {
 // Request placeholder visiblity logic.
 // ================================================================================
 //
+
+// Request headers.
 const requestHeadersPlaceholder = document.getElementById("request-headers-placeholder");
 const requestHeadersContent = document.getElementById("request-headers-content");
 
@@ -58,6 +60,25 @@ requestHeadersContent.addEventListener("blur", () => {
     }
 });
 
+// Request query strings.
+const requestQueryStringsPlaceholder = document.getElementById("request-query-strings-placeholder");
+const requestQueryStringsContent = document.getElementById("request-query-strings-content");
+
+requestQueryStringsPlaceholder.addEventListener("click", () => {
+    requestQueryStringsPlaceholder.style.display = "none";
+    requestQueryStringsContent.style.display = "block";
+
+    requestQueryStringsContent.focus();
+});
+
+requestQueryStringsContent.addEventListener("blur", () => {
+    if (requestQueryStringsContent.textContent.trim() === "") {
+        requestQueryStringsContent.style.display = "none";
+        requestQueryStringsPlaceholder.style.display = "flex";
+    }
+});
+
+// Request body.
 const requestBodyPlaceholder = document.getElementById("request-body-placeholder");
 const requestBodyContent = document.getElementById("request-body-content");
 
@@ -94,6 +115,7 @@ send.addEventListener("click", async () => {
     responsePlaceholder.style.display = "none";
 
     try {
+        const uri = new URL(request.url);
         const options = {
             method: request.method,
         };
@@ -103,12 +125,17 @@ send.addEventListener("click", async () => {
             options.headers = JSON.parse(requestHeadersContent.textContent);
         }
 
+        // Add request query strings.
+        if (requestQueryStringsContent.textContent.trim() !== "") {
+            uri.search = requestQueryStringsContent.textContent;
+        }
+
         // Add request body.
         if (requestBodyContent.textContent.trim() !== "") {
             options.body = requestBodyContent.textContent;
         }
 
-        const res = await fetch(request.url, options);
+        const res = await fetch(uri, options);
 
         if (!res.ok) {
             responseContent.textContent = res.status;
